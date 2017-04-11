@@ -45,14 +45,34 @@ class ImageRotationView @JvmOverloads constructor(
         }
     }
 
-    fun start(event: MotionEvent) {
+    fun plot(x: Float, y: Float) {
         val paint = Paint(ANTI_ALIAS_FLAG)
         paint.color = Color.YELLOW
         paint.style = Paint.Style.FILL
         useCanvas {
             drawBg(it)
             initDraw(it)
-            it.drawCircle(event.x, event.y, 50f, paint)
+            it.drawCircle(x, y, 50f, paint)
+            paint.color = Color.BLACK
+            paint.strokeWidth = 10f
+            val centerX = (-50f + width) / 2f
+            val centerY = (-50f + height) / 2f
+            it.drawLine(centerX, centerY, x, y, paint)
+            /*
+             *ラジアン
+             * 座標系を起点となるに原点をあわせてから、角度を求める
+             */
+            val r = Math.atan2(y - centerY.toDouble(), x - centerX.toDouble())
+            //度
+            var degree = r * 180 / Math.PI
+            degree = if (degree < 0) {
+                -degree
+            } else {
+                180 + 180 - degree
+            }
+            paint.textSize = 40f
+            Log.d("degree", "$degree");
+            it.drawText("%.2f度".format(degree), width / 2 - 90f, height / 2 + 100f, paint);
         }
     }
 

@@ -17,11 +17,12 @@ class RotationActivity : AppCompatActivity() {
         surfaceView.setOnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    surfaceView.start(event)
-                    true
+                    surfaceView.plot(event.x, event.y)
+                    return@setOnTouchListener true
                 }
-                MotionEvent.ACTION_MOVE -> false
-                MotionEvent.ACTION_UP -> false
+                MotionEvent.ACTION_MOVE -> {
+                    surfaceView.plot(event.x, event.y)
+                }
             }
             false
 
