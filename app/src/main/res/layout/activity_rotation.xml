@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="kamedon.com.imageprocessingsample.RotationActivity">
+    tools:context="kamedon.com.imageprocessingsample.page.rotation.RotationActivity">
 
-    <kamedon.com.imageprocessingsample.view.ImageRotationView
+    <kamedon.com.imageprocessingsample.page.rotation.ImageRotationView
         android:id="@+id/surfaceView"
         android:layout_width="0dp"
         android:layout_height="0dp"

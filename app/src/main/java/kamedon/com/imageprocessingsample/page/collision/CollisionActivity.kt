@@ -1,27 +1,28 @@
-package kamedon.com.imageprocessingsample
+package kamedon.com.imageprocessingsample.page.collision
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MotionEvent
-import kamedon.com.imageprocessingsample.view.ImageRotationView
+import kamedon.com.imageprocessingsample.R
+import kamedon.com.imageprocessingsample.page.collision.ImageCollisionView
 
-class RotationActivity : AppCompatActivity() {
+class CollisionActivity : AppCompatActivity() {
 
     val surfaceView by lazy {
-        findViewById(R.id.surfaceView) as ImageRotationView
+        findViewById(R.id.surfaceView) as ImageCollisionView
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_rotation)
+        setContentView(R.layout.activity_collision)
         surfaceView.setOnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    surfaceView.plot(event.x, event.y)
+                    surfaceView.collide(event.x, event.y)
                     return@setOnTouchListener true
                 }
                 MotionEvent.ACTION_MOVE -> {
-                    surfaceView.plot(event.x, event.y)
+                    surfaceView.collide(event.x, event.y)
                 }
             }
             false

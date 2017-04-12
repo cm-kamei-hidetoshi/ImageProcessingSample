@@ -1,4 +1,4 @@
-package kamedon.com.imageprocessingsample.view
+package kamedon.com.imageprocessingsample.page.translation
 
 import android.content.Context
 import android.graphics.*

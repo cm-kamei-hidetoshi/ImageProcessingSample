@@ -1,4 +1,4 @@
-package kamedon.com.imageprocessingsample
+package kamedon.com.imageprocessingsample.page.translation
 
 import android.graphics.BitmapFactory
 import android.support.v7.app.AppCompatActivity
@@ -6,7 +6,8 @@ import android.os.Bundle
 import android.support.v4.graphics.BitmapCompat
 import android.view.MotionEvent
 import android.view.SurfaceView
-import kamedon.com.imageprocessingsample.view.ImageTranslationView
+import kamedon.com.imageprocessingsample.R
+import kamedon.com.imageprocessingsample.page.translation.ImageTranslationView
 
 class TranslationActivity : AppCompatActivity() {
 

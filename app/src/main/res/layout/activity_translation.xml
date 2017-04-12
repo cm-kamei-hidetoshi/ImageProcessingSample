@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="kamedon.com.imageprocessingsample.TranslationActivity">
+    tools:context="kamedon.com.imageprocessingsample.page.translation.TranslationActivity">
 
-    <kamedon.com.imageprocessingsample.view.ImageTranslationView
+    <kamedon.com.imageprocessingsample.page.translation.ImageTranslationView
         android:id="@+id/surfaceView"
         android:layout_width="0dp"
         android:layout_height="0dp"

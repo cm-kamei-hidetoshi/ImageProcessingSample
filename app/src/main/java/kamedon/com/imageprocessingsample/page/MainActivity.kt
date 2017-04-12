@@ -1,8 +1,12 @@
-package kamedon.com.imageprocessingsample
+package kamedon.com.imageprocessingsample.page
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import kamedon.com.imageprocessingsample.R
+import kamedon.com.imageprocessingsample.page.collision.CollisionActivity
+import kamedon.com.imageprocessingsample.page.rotation.RotationActivity
+import kamedon.com.imageprocessingsample.page.translation.TranslationActivity
 
 class MainActivity : AppCompatActivity() {
 
