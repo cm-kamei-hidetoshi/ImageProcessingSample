@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="kamedon.com.imageprocessingsample.page.collision.CollisionActivity">
+    tools:context="kamedon.com.imageprocessingsample.page.collision.circle.CollisionCircleActivity">
 
-    <kamedon.com.imageprocessingsample.page.collision.ImageCollisionView
+    <kamedon.com.imageprocessingsample.page.collision.circle.ImageCollisionCircleView
         android:id="@+id/surfaceView"
         android:layout_width="0dp"
         android:layout_height="0dp"

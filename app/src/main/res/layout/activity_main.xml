@@ -10,12 +10,12 @@
         android:id="@+id/btnRotation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:text="Rotation"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="32dp"
-        app:layout_constraintHorizontal_bias="0.501" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnTranslation"
@@ -23,19 +23,30 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="translation"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnRotation"
-        app:layout_constraintHorizontal_bias="0.501" />
+        app:layout_constraintTop_toBottomOf="@+id/btnRotation" />
 
     <Button
-        android:id="@+id/btnCollision"
+        android:id="@+id/btnCollisionCircle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Collision"
+        android:text="CollisionCircle"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnTranslation" />
+
+    <Button
+        android:id="@+id/btnCollisionSquare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="CollisionSquare"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnCollisionCircle"
+        app:layout_constraintHorizontal_bias="0.502" />
 
 </android.support.constraint.ConstraintLayout>

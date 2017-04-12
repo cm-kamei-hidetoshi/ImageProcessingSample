@@ -18,7 +18,8 @@
         </activity>
         <activity android:name=".page.rotation.RotationActivity" />
         <activity android:name=".page.translation.TranslationActivity" />
-        <activity android:name=".page.collision.CollisionActivity"></activity>
+        <activity android:name=".page.collision.circle.CollisionCircleActivity" />
+        <activity android:name=".page.collision.square.CollisionSquareActivity"></activity>
     </application>
 
 </manifest>

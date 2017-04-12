@@ -1,4 +1,4 @@
-package kamedon.com.imageprocessingsample.page.collision
+package kamedon.com.imageprocessingsample.page.collision.circle
 
 import android.content.Context
 import android.graphics.Canvas
@@ -16,7 +16,7 @@ import kotlin.text.Typography.degree
  * Created by kamei.hidetoshi on 2017/04/12.
  */
 
-class ImageCollisionView @JvmOverloads constructor(
+class ImageCollisionCircleView @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
         defStyleAttr: Int = 0) : SurfaceView(context, attrs, defStyleAttr), SurfaceHolder.Callback {
