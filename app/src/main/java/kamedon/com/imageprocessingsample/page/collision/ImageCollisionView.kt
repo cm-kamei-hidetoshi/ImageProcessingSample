@@ -37,8 +37,8 @@ class ImageCollisionView @JvmOverloads constructor(
         paint.style = Paint.Style.FILL
 
         useCanvas {
-            drawBg(it)
-            initDraw(it)
+            drawBg(this)
+            initDraw(this)
         }
     }
 
@@ -46,15 +46,15 @@ class ImageCollisionView @JvmOverloads constructor(
         val paint = Paint(ANTI_ALIAS_FLAG)
         paint.style = Paint.Style.FILL
         useCanvas {
-            drawBg(it)
-            initDraw(it)
+            drawBg(this)
+            initDraw(this)
             if (isCollideDotCircle(x, y, (-50f + width) / 2, (-50f + height) / 2, 50f)) {
                 paint.color = Color.RED
             } else {
                 paint.color = Color.YELLOW
             }
 
-            it.drawCircle(x, y, 25f, paint)
+            drawCircle(x, y, 25f, paint)
         }
     }
 

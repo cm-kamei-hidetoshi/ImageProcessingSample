@@ -37,21 +37,21 @@ class ImageTranslationView @JvmOverloads constructor(
     }
 
     override fun surfaceCreated(holder: SurfaceHolder?) {
-        useCanvas { canvas ->
-            drawBg(canvas)
+        useCanvas {
+            drawBg(this)
             bitmap?.let { image ->
                 bitmaMatrix.setTranslate((-image.width + width) / 2f, (-image.height + height) / 2f)
-                canvas.drawBitmap(image, bitmaMatrix, Paint())
+                drawBitmap(image, bitmaMatrix, Paint())
             }
         }
     }
 
     fun translate(x: Float, y: Float) {
-        useCanvas { canvas ->
-            drawBg(canvas)
+        useCanvas {
+            drawBg(this)
             bitmap?.let { image ->
                 bitmaMatrix.setTranslate(-image.width / 2f + x, -image.height  / 2f+ y)
-                canvas.drawBitmap(image, bitmaMatrix, Paint())
+                drawBitmap(image, bitmaMatrix, Paint())
             }
         }
     }

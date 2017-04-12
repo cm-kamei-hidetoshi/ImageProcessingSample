@@ -40,8 +40,8 @@ class ImageRotationView @JvmOverloads constructor(
         paint.style = Paint.Style.FILL
 
         useCanvas {
-            it.drawColor(Color.WHITE)
-            it.drawCircle((-50f + width) / 2, (-50f + height) / 2, 50f, paint)
+            drawColor(Color.WHITE)
+            drawCircle((-50f + width) / 2, (-50f + height) / 2, 50f, paint)
         }
     }
 
@@ -50,14 +50,14 @@ class ImageRotationView @JvmOverloads constructor(
         paint.color = Color.YELLOW
         paint.style = Paint.Style.FILL
         useCanvas {
-            drawBg(it)
-            initDraw(it)
-            it.drawCircle(x, y, 50f, paint)
+            drawBg(this)
+            initDraw(this)
+            drawCircle(x, y, 50f, paint)
             paint.color = Color.BLACK
             paint.strokeWidth = 10f
             val centerX = (-50f + width) / 2f
             val centerY = (-50f + height) / 2f
-            it.drawLine(centerX, centerY, x, y, paint)
+            drawLine(centerX, centerY, x, y, paint)
             /*
              *ラジアン
              * 座標系を起点となるに原点をあわせてから、角度を求める
@@ -72,7 +72,7 @@ class ImageRotationView @JvmOverloads constructor(
             }
             paint.textSize = 40f
             Log.d("degree", "$degree");
-            it.drawText("%.2f度".format(degree), width / 2 - 90f, height / 2 + 100f, paint);
+            drawText("%.2f度".format(degree), width / 2 - 90f, height / 2 + 100f, paint);
         }
     }
 

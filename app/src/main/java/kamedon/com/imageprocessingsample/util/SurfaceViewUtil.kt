@@ -7,9 +7,9 @@ import android.view.SurfaceView
  * Created by kamei.hidetoshi on 2017/04/11.
  */
 
-inline fun SurfaceView.useCanvas(action: (Canvas) -> Unit) {
+inline fun SurfaceView.useCanvas(action: (Canvas.() -> Unit)) {
     holder?.lockCanvas()?.let {
-        action(it)
+        it.action()
         holder.unlockCanvasAndPost(it)
     }
 }
