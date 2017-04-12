@@ -15,5 +15,8 @@ class MainActivity : AppCompatActivity() {
         findViewById(R.id.btnTranslation).setOnClickListener {
             startActivity(Intent(applicationContext, TranslationActivity::class.java))
         }
+        findViewById(R.id.btnCollision).setOnClickListener {
+            startActivity(Intent(applicationContext, CollisionActivity::class.java))
+        }
     }
 }

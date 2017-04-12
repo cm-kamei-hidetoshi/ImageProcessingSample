@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".RotationActivity" />
-        <activity android:name=".TranslationActivity"></activity>
+        <activity android:name=".TranslationActivity" />
+        <activity android:name=".CollisionActivity"></activity>
     </application>
 
 </manifest>
