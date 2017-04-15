@@ -1,15 +1,14 @@
 package kamedon.com.imageprocessingsample.page.collision
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
+import android.graphics.*
 import android.graphics.Paint.ANTI_ALIAS_FLAG
+import android.support.annotation.Dimension.PX
 import android.util.AttributeSet
 import android.util.Log
 import android.view.SurfaceHolder
 import android.view.SurfaceView
-import kamedon.com.imageprocessingsample.util.useCanvas
+import kamedon.com.imageprocessingsample.util.*
 import kotlin.text.Typography.degree
 
 /**
@@ -21,9 +20,19 @@ class ImageCollisionSquareView @JvmOverloads constructor(
         attrs: AttributeSet? = null,
         defStyleAttr: Int = 0) : SurfaceView(context, attrs, defStyleAttr), SurfaceHolder.Callback {
 
+    val imageMatrix = Matrix()
+
     init {
         holder.addCallback(this)
     }
+
+    val degree = 30f
+    var bitmap: Bitmap? = null
+
+    fun setup(bitmap: Bitmap) {
+        this.bitmap = bitmap
+    }
+
 
     override fun surfaceChanged(holder: SurfaceHolder?, format: Int, width: Int, height: Int) {
     }
@@ -32,48 +41,40 @@ class ImageCollisionSquareView @JvmOverloads constructor(
     }
 
     override fun surfaceCreated(holder: SurfaceHolder?) {
-        val paint = Paint(ANTI_ALIAS_FLAG)
-        paint.color = Color.BLUE
-        paint.style = Paint.Style.FILL
-
-        useCanvas {
-            drawBg(this)
-            initDraw(this)
-        }
+        drawImage()
     }
 
-    fun collide(x: Float, y: Float) {
+    fun drawImage() {
         val paint = Paint(ANTI_ALIAS_FLAG)
         paint.style = Paint.Style.FILL
+        val (drawX, drawY) = 50f to 50f
+        val rad = degree * 180 / Math.PI
         useCanvas {
             drawBg(this)
-            initDraw(this)
-            if (isCollideDotCircle(x, y, (-50f + width) / 2, (-50f + height) / 2, 50f)) {
-                paint.color = Color.RED
-            } else {
-                paint.color = Color.YELLOW
+            bitmap?.let {
+                imageMatrix.postRotate(degree, it.width / 2f, it.height / 2f)
+                imageMatrix.postTranslate(drawX, drawY)
+                val (w, h) = width / 100f to height / 100f
+                val rect= RectF(drawX, drawY, it.width + drawX, it.height + drawY)
+                drawBitmap(it, imageMatrix, Paint())
+                (0..19).forEach { row ->
+                    (0..29).forEach { col ->
+                        val (pX, pY) = col * w to row * h
+                        if (isCollideDotRect(pX.toDouble(), pY.toDouble(), rect, rad)) {
+                            paint.color = Color.RED
+                        } else {
+                            paint.color = Color.YELLOW
+                        }
+                        drawCircle(pX, pY, w / 2, paint)
+                    }
+                }
             }
-
-            drawCircle(x, y, 25f, paint)
         }
     }
 
-    /*
-     * 2点間の距離が半径以下のとき衝突
-     * 距離の二乗のまま比較すると速度アップ
-     */
-    private fun isCollideDotCircle(x: Float, y: Float, circleX: Float, circleY: Float, r: Float) =
-            Math.pow(x - circleX.toDouble(), 2.0) + Math.pow((y - circleY.toDouble()), 2.0) <= r * r
 
     fun drawBg(canvas: Canvas) {
         canvas.drawColor(Color.WHITE)
-    }
-
-    fun initDraw(canvas: Canvas) {
-        val paint = Paint(ANTI_ALIAS_FLAG)
-        paint.color = Color.BLUE
-        paint.style = Paint.Style.FILL
-        canvas.drawCircle((-50f + width) / 2, (-50f + height) / 2, 50f, paint)
     }
 
 

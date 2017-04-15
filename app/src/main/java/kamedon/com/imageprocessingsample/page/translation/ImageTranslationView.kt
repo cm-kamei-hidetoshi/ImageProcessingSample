@@ -28,6 +28,7 @@ class ImageTranslationView @JvmOverloads constructor(
 
     fun setup(bitmap: Bitmap) {
         this.bitmap = bitmap
+        invalidate()
     }
 
     override fun surfaceChanged(holder: SurfaceHolder?, format: Int, width: Int, height: Int) {
