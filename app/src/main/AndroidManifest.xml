@@ -19,7 +19,8 @@
         <activity android:name=".page.rotation.RotationActivity" />
         <activity android:name=".page.translation.TranslationActivity" />
         <activity android:name=".page.collision.circle.CollisionCircleActivity" />
-        <activity android:name=".page.collision.square.CollisionSquareActivity"></activity>
+        <activity android:name=".page.collision.square.CollisionSquareActivity" />
+        <activity android:name=".page.edit.EditActivity"></activity>
     </application>
 
 </manifest>

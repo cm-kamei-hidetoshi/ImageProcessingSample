@@ -6,6 +6,7 @@ import android.os.Bundle
 import kamedon.com.imageprocessingsample.R
 import kamedon.com.imageprocessingsample.page.collision.circle.CollisionCircleActivity
 import kamedon.com.imageprocessingsample.page.collision.square.CollisionSquareActivity
+import kamedon.com.imageprocessingsample.page.edit.EditActivity
 import kamedon.com.imageprocessingsample.page.rotation.RotationActivity
 import kamedon.com.imageprocessingsample.page.translation.TranslationActivity
 
@@ -25,6 +26,9 @@ class MainActivity : AppCompatActivity() {
         }
         findViewById(R.id.btnCollisionSquare).setOnClickListener {
             startActivity(Intent(applicationContext, CollisionSquareActivity::class.java))
+        }
+        findViewById(R.id.btnEdit).setOnClickListener {
+            startActivity(Intent(applicationContext, EditActivity::class.java))
         }
     }
 }
