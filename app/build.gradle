@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.github.ben-manes.versions'
 
+ext.rxlifecycle_version = '2.0.1'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -24,12 +26,24 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.google.code.findbugs'
     })
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:25.3.1'
     testCompile 'junit:junit:4.12'
+
+    //Rx
+    compile "io.reactivex.rxjava2:rxjava:2.0.8"
+    compile("io.reactivex.rxjava2:rxandroid:2.0.1")
+
+    compile "com.jakewharton.rxbinding2:rxbinding:2.0.0"
+    compile "com.trello.rxlifecycle2:rxlifecycle:$rxlifecycle_version"
+    compile "com.trello.rxlifecycle2:rxlifecycle-android:$rxlifecycle_version"
+    compile "com.trello.rxlifecycle2:rxlifecycle-components:$rxlifecycle_version"
+    compile "com.trello.rxlifecycle2:rxlifecycle-kotlin:$rxlifecycle_version"
+
 }
 
 repositories {
