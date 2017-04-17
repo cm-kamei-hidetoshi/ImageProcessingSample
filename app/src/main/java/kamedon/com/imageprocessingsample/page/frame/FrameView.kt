@@ -21,11 +21,11 @@ class FrameView @JvmOverloads constructor(
         holder.addCallback(this)
     }
 
-    var bitmap: Bitmap? = null
+    lateinit var drawer: FrameDrawer
 
-    fun setup(bitmap: Bitmap) {
-        this.bitmap = bitmap
-        invalidate()
+    fun setup(drawer: FrameDrawer) {
+        this.drawer = drawer
+        update()
     }
 
     override fun surfaceChanged(holder: SurfaceHolder?, format: Int, width: Int, height: Int) {
@@ -36,6 +36,14 @@ class FrameView @JvmOverloads constructor(
 
     override fun surfaceCreated(holder: SurfaceHolder?) {
         useCanvas {
+            drawBg(this)
+        }
+    }
+
+    fun update() {
+        useCanvas {
+            drawBg(this)
+            drawer.draw(this)
         }
     }
 
