@@ -36,7 +36,7 @@ class FrameDrawer(val frameLayer: FrameDrawLayer, val photoLayer: List<PhotoDraw
 
     fun setup(width: Int, height: Int) {
         frameLayer.setup(width, height)
-        photoLayer.forEach { it.setup(frameLayer.drawRate, frameLayer.offsetX, frameLayer.offsetY) }
+        photoLayer.forEach { it.setup(frameLayer.scale, frameLayer.offsetX, frameLayer.offsetY) }
     }
 
 }
@@ -50,9 +50,9 @@ class FrameDrawerBuilder(var frame: Frame) {
 
 class FrameDrawLayer(rectF: DrawRectF, bitmap: Bitmap) : DrawLayer(rectF, bitmap) {
     fun setup(screenWidth: Int, screenHeight: Int) {
-        drawRate = Math.min(screenWidth / width.toFloat(), screenHeight / height.toFloat())
-        offsetX = (width * drawRate - screenWidth) / 2f
-        offsetY = (height * drawRate - screenHeight) / 2f
+        scale = Math.min(screenWidth / width.toFloat(), screenHeight / height.toFloat())
+        offsetX = (width * scale - screenWidth) / 2f
+        offsetY = (height * scale - screenHeight) / 2f
         update()
     }
 }
@@ -67,7 +67,7 @@ class PhotoDrawLayer(rectF: DrawRectF, bitmap: Bitmap) : DrawLayer(rectF, bitmap
     }
 
     fun setup(rate: Float, offsetX: Float, offsetY: Float) {
-        drawRate = rate
+        scale = rate
         this.offsetX = offsetX
         this.offsetY = offsetY
         update()
@@ -86,11 +86,12 @@ open class DrawLayer(val rectF: DrawRectF, val bitmap: Bitmap) {
     var offsetX = 0f
     var offsetY = 0f
 
-    var drawRate = 1f
+    var scale = 1f
 
     val centerX by lazy {
         width / 2f
     }
+
     val centerY by lazy {
         height / 2f
     }
@@ -116,8 +117,8 @@ open class DrawLayer(val rectF: DrawRectF, val bitmap: Bitmap) {
     open fun update() {
         matrix.reset()
         matrix.postRotate(rectF.degree, centerX, centerY)
-        matrix.postScale(drawRate, drawRate)
-        matrix.postTranslate(rectF.rectF.left * drawRate - offsetX, rectF.rectF.top * drawRate - offsetY)
+        matrix.postScale(scale, scale)
+        matrix.postTranslate(rectF.rectF.left * scale - offsetX, rectF.rectF.top * scale - offsetY)
     }
 
     fun draw(canvas: Canvas) {
