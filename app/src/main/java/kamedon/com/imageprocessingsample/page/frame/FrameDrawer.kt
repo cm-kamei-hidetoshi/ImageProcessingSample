@@ -35,8 +35,8 @@ class FrameDrawer(val frameLayer: FrameDrawLayer, val photoLayer: List<PhotoDraw
     }
 
     fun setup(width: Int, height: Int) {
-        photoLayer.forEach { it.setup(width, height) }
         frameLayer.setup(width, height)
+        photoLayer.forEach { it.setup(frameLayer.drawRate, frameLayer.offsetX, frameLayer.offsetY) }
     }
 
 }
@@ -49,11 +49,28 @@ class FrameDrawerBuilder(var frame: Frame) {
 }
 
 class FrameDrawLayer(rectF: DrawRectF, bitmap: Bitmap) : DrawLayer(rectF, bitmap) {
+    fun setup(screenWidth: Int, screenHeight: Int) {
+        drawRate = Math.min(screenWidth / width.toFloat(), screenHeight / height.toFloat())
+        offsetX = (width * drawRate - screenWidth) / 2f
+        offsetY = (height * drawRate - screenHeight) / 2f
+        update()
+    }
 }
 
 class PhotoDrawLayer(rectF: DrawRectF, bitmap: Bitmap) : DrawLayer(rectF, bitmap) {
+    init {
+        canvas.drawColor(Color.BLUE)
+    }
+
     fun touch(x: Float, y: Float) {
 
+    }
+
+    fun setup(rate: Float, offsetX: Float, offsetY: Float) {
+        drawRate = rate
+        this.offsetX = offsetX
+        this.offsetY = offsetY
+        update()
     }
 
 }
@@ -69,7 +86,7 @@ open class DrawLayer(val rectF: DrawRectF, val bitmap: Bitmap) {
     var offsetX = 0f
     var offsetY = 0f
 
-    private var drawRate = 1f
+    var drawRate = 1f
 
     val centerX by lazy {
         width / 2f
@@ -90,12 +107,6 @@ open class DrawLayer(val rectF: DrawRectF, val bitmap: Bitmap) {
         bitmap.recycle()
     }
 
-    fun setup(screenWidth: Int, screenHeight: Int) {
-        drawRate = Math.min(screenWidth / width.toFloat(), screenHeight / height.toFloat())
-        offsetX = (width * drawRate - screenWidth) / 2f
-        offsetY = (height * drawRate - screenHeight) / 2f
-        update()
-    }
 
     fun clear() {
         val canvas = Canvas(bitmap)
@@ -106,11 +117,10 @@ open class DrawLayer(val rectF: DrawRectF, val bitmap: Bitmap) {
         matrix.reset()
         matrix.postRotate(rectF.degree, centerX, centerY)
         matrix.postScale(drawRate, drawRate)
-        matrix.postTranslate(rectF.rectF.left - offsetX, rectF.rectF.top - offsetY)
+        matrix.postTranslate(rectF.rectF.left * drawRate - offsetX, rectF.rectF.top * drawRate - offsetY)
     }
 
     fun draw(canvas: Canvas) {
-        Log.d("draw:layer", "draw")
         canvas.drawBitmap(bitmap, matrix, paint)
     }
 
