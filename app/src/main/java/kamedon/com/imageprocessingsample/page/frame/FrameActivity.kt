@@ -1,18 +1,18 @@
 package kamedon.com.imageprocessingsample.page.frame
 
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.RectF
+import android.graphics.*
 import android.os.Bundle
+import android.util.Log
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 import kamedon.com.imageprocessingsample.R
 import java.lang.Exception
+import java.util.concurrent.TimeUnit
 
 class FrameActivity : RxAppCompatActivity() {
     val surfaceView by lazy {
@@ -28,7 +28,25 @@ class FrameActivity : RxAppCompatActivity() {
                         //テスト用画像を作成
                         val bitmap = Bitmap.createBitmap(540, 960, Bitmap.Config.ARGB_8888)
                         val canvas = Canvas(bitmap)
-                        canvas.drawColor(Color.BLACK)
+                        canvas.drawColor(Color.GRAY)
+                        Bitmap.createBitmap(250, 250, Bitmap.Config.ARGB_8888).apply {
+                            val paint = Paint()
+                            paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+                            val matrix = Matrix()
+                            matrix.postRotate(30f, width / 2f, height / 2f)
+                            matrix.postTranslate(150f, 100f)
+                            canvas.drawBitmap(this, matrix, paint)
+                            recycle()
+                        }
+                        Bitmap.createBitmap(250, 200, Bitmap.Config.ARGB_8888).apply {
+                            val paint = Paint()
+                            paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+                            val matrix = Matrix()
+                            matrix.postRotate(355f, width / 2f, height / 2f)
+                            matrix.postTranslate(150f, 550f)
+                            canvas.drawBitmap(this, matrix, paint)
+                            recycle()
+                        }
                         it.onSuccess(bitmap)
                     } catch (e: Exception) {
                         it.onError(e)
@@ -38,11 +56,19 @@ class FrameActivity : RxAppCompatActivity() {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map {
-                    //フレームデータを作成
-                    FrameDrawer(Frame.define(it) {
-                        add(FrameRectF(RectF(50f, 50f, 100f, 100f), 60f))
-                    })
+                    val frame = Frame.define(it) {
+                        add(DrawRectF(RectF(150f, 100f, 250f + 150f, 250f + 100f), 30f))
+                        add(DrawRectF(RectF(150f, 550f, 250f + 150f, 200f + 550f), 355f))
+                    }
+
+                    FrameDrawer.define(frame) {}
                 }
                 .subscribe { drawer -> surfaceView.setup(drawer) }
     }
+
+    override fun onDestroy() {
+        surfaceView.destroy()
+        super.onDestroy()
+    }
+
 }

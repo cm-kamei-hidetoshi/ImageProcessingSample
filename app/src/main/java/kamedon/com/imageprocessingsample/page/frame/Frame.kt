@@ -1,28 +1,50 @@
 package kamedon.com.imageprocessingsample.page.frame
 
 import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.RectF
+import kotlin.concurrent.fixedRateTimer
 
 /**
  * Created by kamei.hidetoshi on 2017/04/16.
  */
 
-class Frame(val bitmap: Bitmap, val rectFs: List<FrameRectF>) {
+class Frame(val bitmap: Bitmap, val rectFs: List<DrawRectF>) {
 
     companion object {
-        fun define(bitmap: Bitmap, init: (FrameDrawerBuilder.() -> Unit)): Frame {
-            val builder = FrameDrawerBuilder(bitmap)
+        fun define(bitmap: Bitmap, init: (FrameBuilder.() -> Unit)): Frame {
+            val builder = FrameBuilder(bitmap)
             builder.init()
             return builder.build()
         }
     }
 
+    fun destroy() {
+        bitmap.recycle()
+    }
+
+    val width by lazy {
+        bitmap.width
+    }
+
+    val height by lazy {
+        bitmap.height
+    }
+
+    fun createFrameLayer(): FrameDrawLayer = FrameDrawLayer(DrawRectF(RectF(0f, 0f, bitmap.width.toFloat(), bitmap.height.toFloat()), 0f), bitmap)
+
+    fun createPhotoDrawLayer(): List<PhotoDrawLayer> = rectFs.map {
+        PhotoDrawLayer(it, Bitmap.createBitmap(it.rectF.width().toInt(), it.rectF.height().toInt(), Bitmap.Config.ARGB_8888))
+    }
+
+
 }
 
-class FrameDrawerBuilder(val bitmap: Bitmap) {
-    private val rectFs = mutableListOf<FrameRectF>()
 
-    fun add(rect: FrameRectF) {
+class FrameBuilder(val bitmap: Bitmap) {
+    private val rectFs = mutableListOf<DrawRectF>()
+
+    fun add(rect: DrawRectF) {
         rectFs.add(rect)
     }
 
@@ -31,4 +53,4 @@ class FrameDrawerBuilder(val bitmap: Bitmap) {
     }
 }
 
-data class FrameRectF(val rectF: RectF, val degree: Float)
+data class DrawRectF(val rectF: RectF, val degree: Float)

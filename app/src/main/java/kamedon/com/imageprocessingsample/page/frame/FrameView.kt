@@ -25,6 +25,7 @@ class FrameView @JvmOverloads constructor(
 
     fun setup(drawer: FrameDrawer) {
         this.drawer = drawer
+        drawer.setup(width, height)
         update()
     }
 
@@ -49,6 +50,10 @@ class FrameView @JvmOverloads constructor(
 
     fun drawBg(canvas: Canvas) {
         canvas.drawColor(Color.WHITE)
+    }
+
+    fun destroy() {
+        drawer.destroy()
     }
 
 
