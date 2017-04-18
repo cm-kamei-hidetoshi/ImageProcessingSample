@@ -53,4 +53,8 @@ class FrameBuilder(val bitmap: Bitmap) {
     }
 }
 
+/**
+ * rectFは位置と大きさ
+ * degreeは中心からの角度
+ */
 data class DrawRectF(val rectF: RectF, val degree: Float)

@@ -29,6 +29,7 @@ class FrameActivity : RxAppCompatActivity() {
                         val bitmap = Bitmap.createBitmap(540, 960, Bitmap.Config.ARGB_8888)
                         val canvas = Canvas(bitmap)
                         canvas.drawColor(Color.GRAY)
+                        //写真の位置を切り抜く
                         Bitmap.createBitmap(250, 250, Bitmap.Config.ARGB_8888).apply {
                             val paint = Paint()
                             paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
@@ -38,6 +39,7 @@ class FrameActivity : RxAppCompatActivity() {
                             canvas.drawBitmap(this, matrix, paint)
                             recycle()
                         }
+                        //写真の位置を切り抜く
                         Bitmap.createBitmap(250, 200, Bitmap.Config.ARGB_8888).apply {
                             val paint = Paint()
                             paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
@@ -57,6 +59,7 @@ class FrameActivity : RxAppCompatActivity() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .map {
                     val frame = Frame.define(it) {
+                        //フレームで写真を配置する部分を記述
                         add(DrawRectF(RectF(150f, 100f, 250f + 150f, 250f + 100f), 30f))
                         add(DrawRectF(RectF(150f, 550f, 250f + 150f, 200f + 550f), 355f))
                     }
