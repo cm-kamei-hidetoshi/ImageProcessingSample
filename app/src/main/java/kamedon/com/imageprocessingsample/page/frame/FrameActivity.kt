@@ -28,7 +28,7 @@ class FrameActivity : RxAppCompatActivity() {
                         //テスト用画像を作成
                         val bitmap = Bitmap.createBitmap(540, 960, Bitmap.Config.ARGB_8888)
                         val canvas = Canvas(bitmap)
-//                        canvas.drawColor(Color.GRAY)
+                        canvas.drawColor(Color.GRAY)
                         //写真の位置を切り抜く
                         Bitmap.createBitmap(250, 250, Bitmap.Config.ARGB_8888).apply {
                             val paint = Paint()
