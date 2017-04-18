@@ -8,6 +8,7 @@ import android.graphics.*
 class FrameDrawer(val frameLayer: FrameDrawLayer, val photoLayer: List<PhotoDrawLayer>) {
     var drawRate = 0f
 
+
     companion object {
         fun define(frame: Frame, init: FrameDrawerBuilder.() -> Unit) = FrameDrawerBuilder(frame).apply {
             init()

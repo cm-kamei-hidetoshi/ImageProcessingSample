@@ -18,6 +18,8 @@ class FrameView @JvmOverloads constructor(
         defStyleAttr: Int = 0) : SurfaceView(context, attrs, defStyleAttr), SurfaceHolder.Callback {
 
     val bitmapMatrix = Matrix()
+    var focusListener: ((PhotoDrawLayer) -> Unit)? = null
+    var unFocusListener: ((PhotoDrawLayer) -> Unit)? = null
 
     init {
         holder.addCallback(this)
@@ -62,8 +64,14 @@ class FrameView @JvmOverloads constructor(
 
     fun touch(x: Float, y: Float) {
         val layer = drawer.touch(x, y)
-        current?.unFocus()
-        layer?.focus()
+        current?.run {
+            unFocus()
+            unFocusListener?.invoke(this)
+        }
+        layer?.run {
+            focus()
+            focusListener?.invoke(this)
+        }
         current = layer
         update()
     }

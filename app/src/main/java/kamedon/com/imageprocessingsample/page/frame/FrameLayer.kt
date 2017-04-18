@@ -2,6 +2,8 @@ package kamedon.com.imageprocessingsample.page.frame
 
 import android.graphics.*
 import android.util.Log
+import io.reactivex.Single
+import kamedon.com.imageprocessingsample.R
 import kamedon.com.imageprocessingsample.util.isCollideDotRect
 
 /**
@@ -12,7 +14,7 @@ class FrameDrawLayer(rectF: DrawRectF, bitmap: Bitmap) : DrawLayer(rectF, bitmap
         scale = Math.min(screenWidth / width.toFloat(), screenHeight / height.toFloat())
         offsetX = (width * scale - screenWidth) / 2f
         offsetY = (height * scale - screenHeight) / 2f
-        update()
+        updateMatrix()
     }
 }
 
@@ -20,6 +22,10 @@ class PhotoDrawLayer(rectF: DrawRectF, bitmap: Bitmap) : DrawLayer(rectF, bitmap
     init {
         canvas.drawColor(Color.BLUE)
     }
+
+    var photo: Bitmap? = null
+    val photoMatrix: Matrix = Matrix()
+    var photoScale = 1f
 
     fun touch(touchX: Float, touchY: Float): Boolean {
         val (x, y) = (touchX + offsetX) / scale to (touchY + offsetY) / scale
@@ -30,17 +36,33 @@ class PhotoDrawLayer(rectF: DrawRectF, bitmap: Bitmap) : DrawLayer(rectF, bitmap
         scale = rate
         this.offsetX = offsetX
         this.offsetY = offsetY
-        update()
+        updateMatrix()
     }
 
-    fun focus() {
-        canvas.drawColor(Color.RED)
+    fun photo(bitmap: Bitmap) {
+        photo?.recycle()
+        photo = null
+        photo = bitmap
+        photo?.let {
+            photoScale = Math.max(width / it.width.toFloat(), height / it.height.toFloat())
+            photoMatrix.reset()
+            photoMatrix.postScale(photoScale, photoScale)
+            photoMatrix.postTranslate((width - it.width * photoScale) / 2f, (height - it.height * photoScale) / 2)
+            canvas.drawBitmap(it, photoMatrix, Paint())
+        }
+    }
+
+    override fun destroy() {
+        super.destroy()
+        photo?.recycle()
+        photo = null
     }
 
     fun unFocus() {
-        canvas.drawColor(Color.BLUE)
     }
 
+    fun focus() {
+    }
 }
 
 
@@ -72,7 +94,7 @@ open class DrawLayer(val rectF: DrawRectF, val bitmap: Bitmap) {
         bitmap.height
     }
 
-    fun destroy() {
+    open fun destroy() {
         bitmap.recycle()
     }
 
@@ -83,7 +105,7 @@ open class DrawLayer(val rectF: DrawRectF, val bitmap: Bitmap) {
     }
 
 
-    open fun update() {
+    open fun updateMatrix() {
         matrix.reset()
         matrix.postRotate(rectF.degree, centerX, centerY)
         matrix.postScale(scale, scale)

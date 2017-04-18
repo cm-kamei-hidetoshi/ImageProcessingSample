@@ -78,6 +78,26 @@ class FrameActivity : RxAppCompatActivity() {
             }
             return@setOnTouchListener false
         }
+
+        surfaceView.focusListener = { layer ->
+            Single
+                    .create<Bitmap> {
+                        try {
+                            it.onSuccess(BitmapFactory.decodeResource(resources, R.drawable.cat))
+                        } catch (e: Exception) {
+                            it.onError(e)
+                        }
+                    }
+                    .bindToLifecycle(this)
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe {
+                        bitmap ->
+                        layer.photo(bitmap)
+                        surfaceView.update()
+
+                    }
+        }
     }
 
     override fun onDestroy() {
