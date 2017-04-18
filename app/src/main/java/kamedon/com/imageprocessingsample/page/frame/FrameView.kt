@@ -3,6 +3,8 @@ package kamedon.com.imageprocessingsample.page.frame
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
+import android.util.Log
+import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import kamedon.com.imageprocessingsample.util.useCanvas
@@ -56,5 +58,14 @@ class FrameView @JvmOverloads constructor(
         drawer.destroy()
     }
 
+    var current: PhotoDrawLayer? = null
+
+    fun touch(x: Float, y: Float) {
+        val layer = drawer.touch(x, y)
+        current?.unFocus()
+        layer?.focus()
+        current = layer
+        update()
+    }
 
 }

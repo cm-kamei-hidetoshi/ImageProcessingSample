@@ -1,6 +1,8 @@
 package kamedon.com.imageprocessingsample.page.frame
 
 import android.graphics.*
+import android.util.Log
+import kamedon.com.imageprocessingsample.util.isCollideDotRect
 
 /**
  * Created by kamei.hidetoshi on 2017/04/18.
@@ -19,8 +21,9 @@ class PhotoDrawLayer(rectF: DrawRectF, bitmap: Bitmap) : DrawLayer(rectF, bitmap
         canvas.drawColor(Color.BLUE)
     }
 
-    fun touch(x: Float, y: Float) {
-
+    fun touch(touchX: Float, touchY: Float): Boolean {
+        val (x, y) = (touchX + offsetX) / scale to (touchY + offsetY) / scale
+        return isCollideDotRect(x.toDouble(), y.toDouble(), rectF.rectF, Math.toRadians(rectF.degree.toDouble()))
     }
 
     fun setup(rate: Float, offsetX: Float, offsetY: Float) {
@@ -28,6 +31,14 @@ class PhotoDrawLayer(rectF: DrawRectF, bitmap: Bitmap) : DrawLayer(rectF, bitmap
         this.offsetX = offsetX
         this.offsetY = offsetY
         update()
+    }
+
+    fun focus() {
+        canvas.drawColor(Color.RED)
+    }
+
+    fun unFocus() {
+        canvas.drawColor(Color.BLUE)
     }
 
 }
@@ -70,6 +81,7 @@ open class DrawLayer(val rectF: DrawRectF, val bitmap: Bitmap) {
         val canvas = Canvas(bitmap)
         canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
     }
+
 
     open fun update() {
         matrix.reset()

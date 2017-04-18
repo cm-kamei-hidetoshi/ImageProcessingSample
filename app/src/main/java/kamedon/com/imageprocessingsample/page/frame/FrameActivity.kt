@@ -2,17 +2,15 @@ package kamedon.com.imageprocessingsample.page.frame
 
 import android.graphics.*
 import android.os.Bundle
-import android.util.Log
+import android.view.MotionEvent
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
-import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-
 import kamedon.com.imageprocessingsample.R
+import kamedon.com.imageprocessingsample.R.id.surfaceView
 import java.lang.Exception
-import java.util.concurrent.TimeUnit
 
 class FrameActivity : RxAppCompatActivity() {
     val surfaceView by lazy {
@@ -67,6 +65,19 @@ class FrameActivity : RxAppCompatActivity() {
                     FrameDrawer.define(frame) {}
                 }
                 .subscribe { drawer -> surfaceView.setup(drawer) }
+
+        surfaceView.setOnTouchListener { v, event ->
+            event?.run {
+                when (action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        surfaceView.touch(event.x, event.y)
+                        return@setOnTouchListener true
+                    }
+                    else -> return@setOnTouchListener false
+                }
+            }
+            return@setOnTouchListener false
+        }
     }
 
     override fun onDestroy() {

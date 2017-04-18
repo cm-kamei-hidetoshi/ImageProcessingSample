@@ -21,10 +21,13 @@ class FrameDrawer(val frameLayer: FrameDrawLayer, val photoLayer: List<PhotoDraw
         frameLayer.draw(canvas)
     }
 
-    fun touch(x: Float, y: Float) {
+    fun touch(x: Float, y: Float): PhotoDrawLayer? {
         photoLayer.forEach {
-            it.touch(x, y)
+            if (it.touch(x, y)) {
+                return it
+            }
         }
+        return null
     }
 
     fun destroy() {
