@@ -3,8 +3,6 @@ package kamedon.com.imageprocessingsample.page.frame
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
-import android.util.Log
-import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import kamedon.com.imageprocessingsample.util.useCanvas

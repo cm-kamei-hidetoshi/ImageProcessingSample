@@ -31,6 +31,7 @@ class FrameActivity : RxAppCompatActivity() {
                         Bitmap.createBitmap(250, 250, Bitmap.Config.ARGB_8888).apply {
                             val paint = Paint()
                             paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+                            paint.isAntiAlias = true
                             val matrix = Matrix()
                             matrix.postRotate(30f, width / 2f, height / 2f)
                             matrix.postTranslate(150f, 100f)
@@ -41,6 +42,7 @@ class FrameActivity : RxAppCompatActivity() {
                         Bitmap.createBitmap(250, 200, Bitmap.Config.ARGB_8888).apply {
                             val paint = Paint()
                             paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+                            paint.isAntiAlias = true
                             val matrix = Matrix()
                             matrix.postRotate(355f, width / 2f, height / 2f)
                             matrix.postTranslate(150f, 550f)
@@ -58,8 +60,8 @@ class FrameActivity : RxAppCompatActivity() {
                 .map {
                     val frame = Frame.define(it) {
                         //フレームで写真を配置する部分を記述
-                        add(DrawRectF(RectF(150f, 100f, 250f + 150f, 250f + 100f), 30f))
-                        add(DrawRectF(RectF(150f, 550f, 250f + 150f, 200f + 550f), 355f))
+                        add(DrawRectF(RectF(149f, 99f, 250f + 151f, 250f + 101f), 30f))
+                        add(DrawRectF(RectF(149f, 549f, 250f + 151f, 200f + 551f), 355f))
                     }
 
                     FrameDrawer.define(frame) {}
@@ -68,12 +70,13 @@ class FrameActivity : RxAppCompatActivity() {
 
         surfaceView.setOnTouchListener { v, event ->
             event?.run {
-                when (action) {
+                when (actionMasked) {
                     MotionEvent.ACTION_DOWN -> {
                         surfaceView.touch(event.x, event.y)
                         return@setOnTouchListener true
                     }
-                    else -> return@setOnTouchListener false
+                    else -> {
+                    }
                 }
             }
             return@setOnTouchListener false
