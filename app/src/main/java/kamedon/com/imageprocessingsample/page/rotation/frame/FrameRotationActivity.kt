@@ -11,6 +11,7 @@ import io.reactivex.schedulers.Schedulers
 
 import kamedon.com.imageprocessingsample.R
 import java.util.concurrent.TimeUnit
+import kotlin.text.Typography.degree
 
 class FrameRotationActivity : RxAppCompatActivity() {
 
@@ -29,10 +30,14 @@ class FrameRotationActivity : RxAppCompatActivity() {
                 .bindToLifecycle(this)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext {
+                    degree ->
+                    surfaceView.postDegree(degree)
+                }
                 .subscribe {
                     degree ->
                     Log.d("single", "repeat")
-                    surfaceView.postDegree(degree)
+                    surfaceView.update()
                 }
 
     }

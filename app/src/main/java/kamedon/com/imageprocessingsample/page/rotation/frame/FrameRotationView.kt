@@ -67,10 +67,23 @@ class FrameRotationView @JvmOverloads constructor(
         }
     }
 
-    fun update(canvas: Canvas) {
+    fun update() {
+        useCanvas {
+            update(this)
+        }
+    }
+
+    private fun update(canvas: Canvas) {
+
+        val len = Math.sqrt(rotationBitmap.width * rotationBitmap.width + rotationBitmap.height * rotationBitmap.height.toDouble())
         canvas.drawColor(Color.GRAY)
         canvas.drawBitmap(baseBitmap, baseMatrix, Paint())
         canvas.drawBitmap(rotationBitmap, rotationMatrix, paint)
+        canvas.drawRect(rectF, Paint().apply {
+            color = Color.YELLOW
+            style = Paint.Style.STROKE
+        })
+
     }
 
 
@@ -78,13 +91,31 @@ class FrameRotationView @JvmOverloads constructor(
         holder.addCallback(this)
     }
 
+    private var rectF = RectF()
+
     fun postDegree(degree: Float) {
         this.degree = (this.degree + degree) % 360f
+
+        val rad = Math.toRadians(this.degree.toDouble())
+        val cx = rotationBitmap.width / 2f
+        val cy = rotationBitmap.height / 2f
+        //外接する四角を計算する
+        rectF.left = (listOf(fx(-cx, -cy, rad), fx(-cx, cy, rad), fx(cx, -cy, rad), fx(cx, cy, rad)).min()!! + centerX).toFloat()
+        rectF.top = (listOf(fy(-cx, -cy, rad), fy(-cx, cy, rad), fy(cx, -cy, rad), fy(cx, cy, rad)).min()!! + centerY).toFloat()
+        rectF.right = (listOf(fx(-cx, -cy, rad), fx(-cx, cy, rad), fx(cx, -cy, rad), fx(cx, cy, rad)).max()!! + centerX).toFloat()
+        rectF.bottom = (listOf(fy(-cx, -cy, rad), fy(-cx, cy, rad), fy(cx, -cy, rad), fy(cx, cy, rad)).max()!! + centerY).toFloat()
+
+        val s = Math.max(rectF.width() / rotationBitmap.width.toFloat(), rectF.height() / rotationBitmap.height.toFloat())
         rotationMatrix.reset()
         rotationMatrix.postRotate(this.degree, rotationBitmap.width / 2f, rotationBitmap.height / 2f)
+        rotationMatrix.postScale(s.toFloat(), s.toFloat(), rotationBitmap.width / 2f, rotationBitmap.height / 2f)
+        rotationMatrix.postScale(1f, 1f, rotationBitmap.width / 2f, rotationBitmap.height / 2f)
         rotationMatrix.postTranslate((width - rotationBitmap.width) / 2f, (height - rotationBitmap.height) / 2f)
-        useCanvas {
-            update(this)
-        }
+
+
     }
+
+    fun fx(x: Float, y: Float, rad: Double) = x * Math.cos(rad) - y * Math.sin(rad)
+
+    fun fy(x: Float, y: Float, rad: Double) = x * Math.sin(rad) + y * Math.cos(rad)
 }
