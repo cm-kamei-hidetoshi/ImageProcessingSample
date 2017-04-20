@@ -32,6 +32,15 @@ class FrameRotationView @JvmOverloads constructor(
             }
         }
     }
+
+    val noScaleBitmap by lazy {
+        Bitmap.createBitmap(width / 4, height / 4, Bitmap.Config.ARGB_8888).apply {
+            Canvas(this).run {
+                drawColor(Color.MAGENTA)
+            }
+        }
+    }
+    val matrix1: Matrix = Matrix()
     val baseMatrix: Matrix = Matrix()
 
     val rotationMatrix: Matrix = Matrix()
@@ -74,14 +83,14 @@ class FrameRotationView @JvmOverloads constructor(
     }
 
     private fun update(canvas: Canvas) {
-
-        val len = Math.sqrt(rotationBitmap.width * rotationBitmap.width + rotationBitmap.height * rotationBitmap.height.toDouble())
         canvas.drawColor(Color.GRAY)
         canvas.drawBitmap(baseBitmap, baseMatrix, Paint())
         canvas.drawBitmap(rotationBitmap, rotationMatrix, paint)
+        canvas.drawBitmap(noScaleBitmap, matrix1, paint)
         canvas.drawRect(rectF, Paint().apply {
-            color = Color.YELLOW
+            color = Color.GREEN
             style = Paint.Style.STROKE
+            strokeWidth = 10f
         })
 
     }
@@ -108,9 +117,13 @@ class FrameRotationView @JvmOverloads constructor(
         val s = Math.max(rectF.width() / rotationBitmap.width.toFloat(), rectF.height() / rotationBitmap.height.toFloat())
         rotationMatrix.reset()
         rotationMatrix.postRotate(this.degree, rotationBitmap.width / 2f, rotationBitmap.height / 2f)
-        rotationMatrix.postScale(s.toFloat(), s.toFloat(), rotationBitmap.width / 2f, rotationBitmap.height / 2f)
-        rotationMatrix.postScale(1f, 1f, rotationBitmap.width / 2f, rotationBitmap.height / 2f)
+        rotationMatrix.postScale(s, s, rotationBitmap.width / 2f, rotationBitmap.height / 2f)
         rotationMatrix.postTranslate((width - rotationBitmap.width) / 2f, (height - rotationBitmap.height) / 2f)
+
+        matrix1.reset()
+        matrix1.postRotate(this.degree, rotationBitmap.width / 2f, rotationBitmap.height / 2f)
+        matrix1.postScale(1f, 1f, rotationBitmap.width / 2f, rotationBitmap.height / 2f)
+        matrix1.postTranslate((width - rotationBitmap.width) / 2f, (height - rotationBitmap.height) / 2f)
 
 
     }
