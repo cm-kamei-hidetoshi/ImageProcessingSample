@@ -17,6 +17,7 @@ import kamedon.com.imageprocessingsample.page.translation.TranslationActivity
 import kotlin.reflect.KClass
 import android.widget.TextView
 import kamedon.com.imageprocessingsample.R
+import kamedon.com.imageprocessingsample.page.rotation.frame.FrameRotationActivity
 
 
 /**
@@ -28,6 +29,7 @@ sealed class Page(val activity: Class<out Activity>) {
 }
 
 object RotationPage : Page(RotationActivity::class.java)
+object FrameRotationPage : Page(FrameRotationActivity::class.java)
 object TranslationPage : Page(TranslationActivity::class.java)
 object CollisionCirclePage : Page(CollisionCircleActivity::class.java)
 object CollisionSquarePage : Page(CollisionSquareActivity::class.java)
@@ -36,7 +38,7 @@ object EditPage : Page(EditActivity::class.java)
 
 
 class PageAdapter(val context: Context) : RecyclerView.Adapter<PageAdapter.ViewHolder>() {
-    val pages = listOf(RotationPage, TranslationPage, CollisionCirclePage, CollisionSquarePage, FramePage, EditPage)
+    val pages = listOf(RotationPage, FrameRotationPage, TranslationPage, CollisionCirclePage, CollisionSquarePage, FramePage, EditPage)
     val inflater = LayoutInflater.from(context)
 
 
