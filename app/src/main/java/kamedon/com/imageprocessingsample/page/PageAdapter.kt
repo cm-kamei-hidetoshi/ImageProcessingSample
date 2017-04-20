@@ -12,7 +12,7 @@ import kamedon.com.imageprocessingsample.page.collision.circle.CollisionCircleAc
 import kamedon.com.imageprocessingsample.page.collision.square.CollisionSquareActivity
 import kamedon.com.imageprocessingsample.page.edit.EditActivity
 import kamedon.com.imageprocessingsample.page.frame.FrameActivity
-import kamedon.com.imageprocessingsample.page.rotation.RotationActivity
+import kamedon.com.imageprocessingsample.page.rotation.nomal.RotationActivity
 import kamedon.com.imageprocessingsample.page.translation.TranslationActivity
 import kotlin.reflect.KClass
 import android.widget.TextView

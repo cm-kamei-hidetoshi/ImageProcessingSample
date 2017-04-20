@@ -1,10 +1,10 @@
-package kamedon.com.imageprocessingsample.page.rotation
+package kamedon.com.imageprocessingsample.page.rotation.nomal
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MotionEvent
 import kamedon.com.imageprocessingsample.R
-import kamedon.com.imageprocessingsample.page.rotation.ImageRotationView
+import kamedon.com.imageprocessingsample.page.rotation.nomal.ImageRotationView
 
 class RotationActivity : AppCompatActivity() {
 

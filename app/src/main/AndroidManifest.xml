@@ -16,7 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".page.rotation.RotationActivity" />
+        <activity android:name=".page.rotation.nomal.RotationActivity" />
         <activity android:name=".page.translation.TranslationActivity" />
         <activity android:name=".page.collision.circle.CollisionCircleActivity" />
         <activity android:name=".page.collision.square.CollisionSquareActivity" />

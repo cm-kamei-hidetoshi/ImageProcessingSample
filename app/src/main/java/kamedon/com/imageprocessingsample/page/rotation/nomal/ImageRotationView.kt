@@ -1,4 +1,4 @@
-package kamedon.com.imageprocessingsample.page.rotation
+package kamedon.com.imageprocessingsample.page.rotation.nomal
 
 import android.content.Context
 import android.graphics.Canvas
