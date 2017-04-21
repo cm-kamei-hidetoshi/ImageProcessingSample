@@ -22,7 +22,8 @@
         <activity android:name=".page.collision.square.CollisionSquareActivity" />
         <activity android:name=".page.edit.EditActivity" />
         <activity android:name=".page.frame.FrameActivity" />
-        <activity android:name=".page.rotation.frame.FrameRotationActivity"></activity>
+        <activity android:name=".page.rotation.frame.FrameRotationActivity" />
+        <activity android:name=".page.rotation.debug.FrameDebugActivity"></activity>
     </application>
 
 </manifest>

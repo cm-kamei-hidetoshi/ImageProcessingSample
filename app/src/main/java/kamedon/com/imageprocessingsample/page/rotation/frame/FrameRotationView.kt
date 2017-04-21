@@ -7,6 +7,8 @@ import android.util.AttributeSet
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import kamedon.com.imageprocessingsample.page.frame.PhotoDrawLayer
+import kamedon.com.imageprocessingsample.util.fx
+import kamedon.com.imageprocessingsample.util.fy
 import kamedon.com.imageprocessingsample.util.useCanvas
 
 /**
@@ -128,9 +130,4 @@ class FrameRotationView @JvmOverloads constructor(
 
     }
 
-    //xを回転
-    fun fx(x: Float, y: Float, rad: Double) = x * Math.cos(rad) - y * Math.sin(rad)
-
-    //yを回転
-    fun fy(x: Float, y: Float, rad: Double) = x * Math.sin(rad) + y * Math.cos(rad)
 }
