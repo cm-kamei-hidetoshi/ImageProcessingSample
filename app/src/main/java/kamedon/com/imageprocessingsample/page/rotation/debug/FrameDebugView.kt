@@ -5,6 +5,8 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.view.SurfaceHolder
 import android.view.SurfaceView
+import kamedon.com.imageprocessingsample.util.fx
+import kamedon.com.imageprocessingsample.util.fy
 import kamedon.com.imageprocessingsample.util.useCanvas
 
 /**
@@ -66,24 +68,36 @@ class FrameDebugView @JvmOverloads constructor(
     fun postRotate(d: Float) {
         this.degree = d
 
+
         wBaseMatrix.reset()
         hBaseMatrix.reset()
         sqBaseMatrix.reset()
+        wBaseMatrix.postTranslate(offsetX - baseBitmap.width / 2f, offsetY - baseBitmap.height / 2f)
+        hBaseMatrix.postTranslate(offsetX - baseBitmap.width / 2f, offsetY * 2 - baseBitmap.height / 2f)
+        sqBaseMatrix.postTranslate(offsetX - baseBitmap.width / 2f, offsetY * 3 - baseBitmap.height / 2f)
 
+        var rectF = RectF(0f, 0f, baseBitmap.width.toFloat(), baseBitmap.height.toFloat())
+        val rad = Math.toRadians(degree.toDouble())
+        var cRectF = circumscribedSquare(rectF, rad)
+
+        var s = Math.max(cRectF.width() / wBitmap.width, cRectF.height() / wBitmap.height)
         wMatrix.reset()
         wMatrix.postRotate(degree, wBitmap.width / 2f, wBitmap.height / 2f)
+        wMatrix.postScale(s, s, wBitmap.width / 2f, wBitmap.height / 2f)
         wMatrix.postTranslate(offsetX - wBitmap.width / 2f, offsetY - wBitmap.height / 2f)
-        wBaseMatrix.postTranslate(offsetX - baseBitmap.width / 2f, offsetY - baseBitmap.height / 2f)
 
+        s = Math.max(cRectF.width() / hBitmap.width, cRectF.height() / hBitmap.height)
         hMatrix.reset()
         hMatrix.postRotate(degree, hBitmap.width / 2f, hBitmap.height / 2f)
+        hMatrix.postScale(s, s, hBitmap.width / 2f, hBitmap.height / 2f)
         hMatrix.postTranslate(offsetX - hBitmap.width / 2f, offsetY * 2 - hBitmap.height / 2f)
-        hBaseMatrix.postTranslate(offsetX - baseBitmap.width / 2f, offsetY * 2 - baseBitmap.height / 2f)
 
+        s = Math.max(cRectF.width() / sqBitmap.width, cRectF.height() / sqBitmap.height)
         sqMatrix.reset()
         sqMatrix.postRotate(degree, sqBitmap.width / 2f, sqBitmap.height / 2f)
+        sqMatrix.postScale(s, s, sqBitmap.width / 2f, sqBitmap.height / 2f)
         sqMatrix.postTranslate(offsetX - sqBitmap.width / 2f, offsetY * 3 - sqBitmap.height / 2f)
-        sqBaseMatrix.postTranslate(offsetX - baseBitmap.width / 2f, offsetY * 3 - baseBitmap.height / 2f)
+
         update()
 
     }
@@ -106,6 +120,17 @@ class FrameDebugView @JvmOverloads constructor(
         Canvas(this).run {
             drawColor(color)
         }
+    }
+
+    fun circumscribedSquare(rectF: RectF, rad: Double): RectF {
+        val (cx, cy) = rectF.width() / 2 to rectF.height() / 2
+
+        val (x1, y1) = fx(-cx, -cy, rad) to fy(-cx, -cy, rad)
+        val (x2, y2) = fx(-cx, cy, rad) to fy(-cx, cy, rad)
+        val (x3, y3) = fx(cx, -cy, rad) to fy(cx, -cy, rad)
+        val (x4, y4) = fx(cx, cy, rad) to fy(cx, cy, rad)
+
+        return RectF(listOf(x1, x2, x3, x4).min()!!.toFloat(), listOf(y1, y2, y3, y4).min()!!.toFloat(), listOf(x1, x2, x3, x4).max()!!.toFloat(), listOf(y1, y2, y3, y4).max()!!.toFloat())
     }
 
 
