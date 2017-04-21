@@ -34,6 +34,7 @@ class FrameDebugView @JvmOverloads constructor(
 
     val alphaPaint = Paint().apply {
         alpha = 128
+        isAntiAlias = true
     }
 
     val paint = Paint()
@@ -53,14 +54,14 @@ class FrameDebugView @JvmOverloads constructor(
     var offsetY: Float = 0f
 
     override fun surfaceCreated(holder: SurfaceHolder?) {
-        val (w, h) = width / 7f to height / 7f
+        val (w, h) = width / 8f to height / 8f
 
         offsetX = width / 2f
-        offsetY = height / 4f
+        offsetY = height / 7f
 
         baseBitmap = Bitmap.createBitmap(w.toInt(), h.toInt(), Bitmap.Config.ARGB_8888).apply { drawColor(Color.BLACK) }
-        wBitmap = Bitmap.createBitmap(w.toInt(), h.toInt() + 100, Bitmap.Config.ARGB_8888).apply { drawColor(Color.BLUE) }
-        hBitmap = Bitmap.createBitmap(w.toInt() + 100, h.toInt(), Bitmap.Config.ARGB_8888).apply { drawColor(Color.BLUE) }
+        wBitmap = Bitmap.createBitmap(w.toInt(), h.toInt() + 150, Bitmap.Config.ARGB_8888).apply { drawColor(Color.BLUE) }
+        hBitmap = Bitmap.createBitmap(w.toInt() + 150, h.toInt(), Bitmap.Config.ARGB_8888).apply { drawColor(Color.BLUE) }
         sqBitmap = Bitmap.createBitmap(h.toInt(), h.toInt(), Bitmap.Config.ARGB_8888).apply { drawColor(Color.BLUE) }
         postRotate(0f)
     }
@@ -73,8 +74,8 @@ class FrameDebugView @JvmOverloads constructor(
         hBaseMatrix.reset()
         sqBaseMatrix.reset()
         wBaseMatrix.postTranslate(offsetX - baseBitmap.width / 2f, offsetY - baseBitmap.height / 2f)
-        hBaseMatrix.postTranslate(offsetX - baseBitmap.width / 2f, offsetY * 2 - baseBitmap.height / 2f)
-        sqBaseMatrix.postTranslate(offsetX - baseBitmap.width / 2f, offsetY * 3 - baseBitmap.height / 2f)
+        hBaseMatrix.postTranslate(offsetX - baseBitmap.width / 2f, offsetY * 3 - baseBitmap.height / 2f)
+        sqBaseMatrix.postTranslate(offsetX - baseBitmap.width / 2f, offsetY * 5 - baseBitmap.height / 2f)
 
         var rectF = RectF(0f, 0f, baseBitmap.width.toFloat(), baseBitmap.height.toFloat())
         val rad = Math.toRadians(degree.toDouble())
@@ -90,13 +91,13 @@ class FrameDebugView @JvmOverloads constructor(
         hMatrix.reset()
         hMatrix.postRotate(degree, hBitmap.width / 2f, hBitmap.height / 2f)
         hMatrix.postScale(s, s, hBitmap.width / 2f, hBitmap.height / 2f)
-        hMatrix.postTranslate(offsetX - hBitmap.width / 2f, offsetY * 2 - hBitmap.height / 2f)
+        hMatrix.postTranslate(offsetX - hBitmap.width / 2f, offsetY * 3 - hBitmap.height / 2f)
 
         s = Math.max(cRectF.width() / sqBitmap.width, cRectF.height() / sqBitmap.height)
         sqMatrix.reset()
         sqMatrix.postRotate(degree, sqBitmap.width / 2f, sqBitmap.height / 2f)
         sqMatrix.postScale(s, s, sqBitmap.width / 2f, sqBitmap.height / 2f)
-        sqMatrix.postTranslate(offsetX - sqBitmap.width / 2f, offsetY * 3 - sqBitmap.height / 2f)
+        sqMatrix.postTranslate(offsetX - sqBitmap.width / 2f, offsetY * 5 - sqBitmap.height / 2f)
 
         update()
 
