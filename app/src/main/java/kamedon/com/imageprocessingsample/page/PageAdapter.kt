@@ -18,6 +18,7 @@ import kotlin.reflect.KClass
 import android.widget.TextView
 import kamedon.com.imageprocessingsample.R
 import kamedon.com.imageprocessingsample.page.frame.Frame
+import kamedon.com.imageprocessingsample.page.frame.FrameUIActivity
 import kamedon.com.imageprocessingsample.page.rotation.debug.FrameDebugActivity
 import kamedon.com.imageprocessingsample.page.rotation.frame.FrameRotationActivity
 
@@ -37,12 +38,13 @@ object TranslationPage : Page(TranslationActivity::class.java)
 object CollisionCirclePage : Page(CollisionCircleActivity::class.java)
 object CollisionSquarePage : Page(CollisionSquareActivity::class.java)
 object FramePage : Page(FrameActivity::class.java)
+object FrameUIPage : Page(FrameUIActivity::class.java)
 object EditPage : Page(EditActivity::class.java)
 
 
 class PageAdapter(val context: Context) : RecyclerView.Adapter<PageAdapter.ViewHolder>() {
-    val pages = listOf(RotationPage, FrameRotationPage, TranslationPage, CollisionCirclePage, CollisionSquarePage, FramePage, FrameDebugPage, EditPage)
-    val inflater = LayoutInflater.from(context)
+    val pages = listOf(RotationPage, FrameRotationPage, TranslationPage, CollisionCirclePage, CollisionSquarePage, FramePage, FrameUIPage, FrameDebugPage, EditPage)
+    val inflater = LayoutInflater.from(context)!!
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

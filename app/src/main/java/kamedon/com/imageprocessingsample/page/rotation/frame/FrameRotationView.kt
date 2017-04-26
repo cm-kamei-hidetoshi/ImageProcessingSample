@@ -128,6 +128,7 @@ class FrameRotationView @JvmOverloads constructor(
         matrix1.postTranslate((width - rotationBitmap.width) / 2f, (height - rotationBitmap.height) / 2f)
 
 
+
     }
 
 }

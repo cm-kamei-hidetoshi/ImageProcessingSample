@@ -23,7 +23,8 @@
         <activity android:name=".page.edit.EditActivity" />
         <activity android:name=".page.frame.FrameActivity" />
         <activity android:name=".page.rotation.frame.FrameRotationActivity" />
-        <activity android:name=".page.rotation.debug.FrameDebugActivity"></activity>
+        <activity android:name=".page.rotation.debug.FrameDebugActivity" />
+        <activity android:name=".page.frame.FrameUIActivity"></activity>
     </application>
 
 </manifest>
